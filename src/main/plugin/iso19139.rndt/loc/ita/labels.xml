@@ -359,7 +359,7 @@
   </element>
 
   <element name="gmd:codeSpace" id="208.1">
-		<label>Codespace</label>
+		<label>Spazio dei codici</label>
 		<description>Nome o identificativo della persona o dell'organizzazione responsabile del namespace</description>
 		<helper>
 			<option value="http://www.epsg-registry.org">EPSG</option>
@@ -926,7 +926,7 @@
     <condition>obbligatorio</condition>
   </element>
   <element name="gmd:status">
-    <label>Status</label>
+    <label>Stato</label>
     <description>Fase di programmazione/realizzazione</description>
     <condition>Obbligatorio</condition>
   </element>
@@ -1014,7 +1014,7 @@
     <description>Descrizione della misura da determinare</description>
   </element>
   <element name="gco:Distance">
-    <label>Distance</label>
+    <label>Distanza</label>
     <description>Distance</description>
     <condition></condition>
   </element>
@@ -1303,6 +1303,257 @@
       i dati
     </description>
     <condition/>
+  </element>
+
+  <!-- Etichette di ISO 19139 rimaste in inglese nel file italiano di GeoNetwork 4.4.12, tradotte qui per i record
+       RNDT (le etichette del plugin hanno la precedenza su quelle di iso19139). -->
+  <element name="gmd:LI_ProcessStep" id="86.0">
+    <label>Fase del processo</label>
+    <description>Classe di informazioni per documentare le fonti ed il processo di realizzazione dei
+      dati ("genealogia" dei dati)
+    </description>
+
+    <help>informazioni su un evento o una trasformazione nella vita di un dataset compreso il
+      processo per manutenere il dataset
+    </help>
+  </element>
+  <element name="gmd:dataSetURI" id="11.1">
+    <label>URI del dataset</label>
+    <description>Uniformed Resource Identifier (URI) del dataset al quale si riferiscono i
+      metadati
+    </description>
+    <help>Uniformed Resource Identifier (URI) del dataset al quale si riferiscono i metadati</help>
+  </element>
+  <element name="gmd:dataset" id="154.0">
+    <description>Dataset al quale si riferisce l'informazione</description>
+    <condition/>
+    <label>Dataset</label>
+  </element>
+  <element name="gmd:densityUnits" id="294.0">
+    <label>Unità di densità</label>
+    <description>Unità di misura per la densità di registrazione</description>
+    <condition>conditional</condition>
+  </element>
+  <element name="gmd:description" id="549.0" context="gmd:MD_CodeValue">
+    <label>Descrizione del valore</label>
+    <description>Descrizione del valore</description>
+  </element>
+  <element name="gmd:domainCode" id="309.0">
+    <label>Codice del dominio</label>
+    <description>Codice di tre cifre assegnato all'elemento esteso</description>
+    <_condition>Conditional / is dataType ?codelistElement??</_condition>
+  </element>
+  <element name="gmd:featureCatalogueCitation" id="238.0">
+    <label>Citazione del catalogo degli oggetti</label>
+    <description>Riferimento bibliografico completo a uno o più cataloghi degli oggetti esterni</description>
+    <condition>obbligatorio</condition>
+  </element>
+  <element name="gmd:featureInstances" id="152.0">
+    <label>Istanze degli oggetti</label>
+    <description>Istanze degli oggetti a cui si riferisce l’informazione</description>
+    <condition/>
+  </element>
+  <element name="gmd:featureTypes" id="237.0">
+    <label>Tipi di oggetti</label>
+    <description>Sottoinsieme dei tipi di oggetti del catalogo citato presenti nei dati</description>
+  </element>
+  <element name="gmd:features" id="151.0">
+    <label>Oggetti</label>
+    <description>Oggetti a cui si riferisce l’informazione</description>
+    <condition/>
+  </element>
+  <element name="gmd:includedWithDataset" id="236.0">
+    <label>Incluso nel dataset</label>
+    <description>Indica se il catalogo degli oggetti è incluso nel dataset</description>
+    <condition>obbligatorio</condition>
+  </element>
+  <element name="gmd:mediumFormat" id="296.0">
+    <label>Formato del supporto</label>
+    <description>Metodo usato per scrivere sul supporto</description>
+  </element>
+  <element name="gmd:mediumNote" id="297.0">
+    <label>Note sul supporto</label>
+    <description>Vincoli sull’accesso e sulla fruibilità dei metadati</description>
+  </element>
+  <element name="gmd:metadataConstraints">
+    <label>Vincoli sui metadati</label>
+    <abbrLabel>Vincoli</abbrLabel>
+    <description>Fornisce restrizioni all'accesso e all'uso dei dati</description>
+  </element>
+  <element name="gmd:name" context="gmd:MD_Medium" id="292.0">
+    <label>Nome</label>
+    <description>Il nome del supporto in cui è possibili ricevere la risorsa</description>
+  </element>
+  <element name="gmd:name" context="gmd:MD_Role" id="556.0">
+    <label>Nome</label>
+    <description>Nome ruolo</description>
+  </element>
+  <element name="gmd:name">
+    <label>Nome</label>
+    <description/>
+  </element>
+  <element name="gmd:obligation" id="311.0">
+    <label>Obbligatorietà</label>
+    <description>Obbligatorietà dell’elemento esteso</description>
+  </element>
+  <element name="gmd:offset" id="267.0">
+    <label>Scostamento</label>
+    <description>Il valore fisico corrispondente al valore di una cella zero</description>
+  </element>
+  <element name="gmd:schemaAscii" id="324.0">
+    <label>Schema ASCII</label>
+    <description>Schema completo dato come file ASCII</description>
+  </element>
+  <element name="gmd:spatialExtent" id="353.0">
+    <label>Estensione spaziale</label>
+    <description>Componente spaziale dell’estensione spaziale e temporale</description>
+    <condition>obbligatorio</condition>
+  </element>
+  <element name="gmd:textGroup" id="602.0">
+    <label>Gruppo di testi</label>
+    <description>Gruppo di testi</description>
+  </element>
+  <element name="gmd:transformationDimensionDescription" id="168.0">
+    <label>Descrizione delle dimensioni della trasformazione</label>
+    <description>Descrizione delle dimensioni della griglia che sono spaziali</description>
+  </element>
+  <element name="gmd:turnaround" id="302.0">
+    <label>Tempi di evasione</label>
+    <description>Tempo tipico per evadere un ordine</description>
+  </element>
+  <element name="gml:descriptionReference">
+    <label>Riferimento alla descrizione</label>
+    <description></description>
+  </element>
+  <element name="gml:TimeNode">
+    <label>Nodo temporale</label>
+    <description/>
+  </element>
+  <element name="indeterminatePosition">
+    <label>Posizione indeterminata</label>
+    <description></description>
+  </element>
+  <element name="frame">
+    <label>Sistema di riferimento temporale</label>
+    <description>L’attributo frame è un riferimento URI che identifica la descrizione del sistema di riferimento temporale</description>
+  </element>
+  <element name="calendarEraName">
+    <label>Nome dell’era del calendario</label>
+    <description></description>
+  </element>
+  <element name="unit">
+    <label>Unità</label>
+    <description></description>
+  </element>
+  <element name="radix">
+    <label>Base</label>
+    <description></description>
+  </element>
+  <element name="factor">
+    <label>Fattore</label>
+    <description></description>
+  </element>
+  <element name="srv:SV_ParameterDirection">
+    <label>Direzione del parametro</label>
+  </element>
+  <element name="srv:SV_CoupledResource">
+    <label>Risorsa accoppiata</label>
+    <description>Dettagli delle risorse accoppiate a questo servizio</description>
+  </element>
+  <element name="gmd:PT_Locale">
+    <label>Impostazioni locali</label>
+    <description>Impostazioni locali (lingua, paese, codifica)</description>
+  </element>
+  <element name="gmd:PT_LocaleContainer">
+    <label>Contenitore delle impostazioni locali</label>
+    <description>Contenitore delle impostazioni locali</description>
+  </element>
+  <element name="gmd:DS_Association">
+    <label>Associazione</label>
+    <description>Associazione</description>
+  </element>
+  <element name="gmd:DS_DataSet">
+    <label>Dataset</label>
+    <description>Dataset</description>
+  </element>
+  <element name="gmd:DS_Initiative">
+    <label>Iniziativa</label>
+    <description>Iniziativa</description>
+  </element>
+  <element name="gmd:DS_OtherAggregate">
+    <label>Altro aggregato</label>
+    <description>Altro aggregato</description>
+  </element>
+  <element name="gmd:DS_Platform">
+    <label>Piattaforma</label>
+    <description>Piattaforma</description>
+  </element>
+  <element name="gmd:DS_ProductionSeries">
+    <label>Serie di produzione</label>
+    <description>Serie di produzione</description>
+  </element>
+  <element name="gmd:DS_Sensor">
+    <label>Sensore</label>
+    <description>Sensore</description>
+  </element>
+  <element name="gmd:DS_Series">
+    <label>Serie</label>
+    <description>Serie</description>
+  </element>
+  <element name="gmd:DS_StereoMate">
+    <label>Coppia stereoscopica</label>
+    <description>Coppia stereoscopica</description>
+  </element>
+  <element name="gco:ScopedName">
+    <label>Nome con ambito</label>
+    <description/>
+  </element>
+  <element name="gmd:has">
+    <label>Contiene</label>
+    <description>Contiene</description>
+  </element>
+  <element name="gmd:MD_ObligationCode">
+    <label>Codice di obbligatorietà</label>
+    <description>Obbligo dell'elemento o entità</description>
+  </element>
+  <element name="gmd:seriesMetadata">
+    <label>Metadati della serie</label>
+    <description>Metadati della serie</description>
+  </element>
+  <element name="gmx:Anchor">
+    <label>Ancora</label>
+    <description>Permette di inserire un collegamento ipertestuale, come in una pagina web</description>
+  </element>
+  <element name="hidden-elements">
+    <label>Elementi nascosti</label>
+    <description>Gli elementi e gli attributi figli sono nascosti perché non hai i privilegi per vederli</description>
+  </element>
+  <element name="gmx:name">
+    <label>Nome</label>
+    <description>Nome del catalogo degli oggetti</description>
+  </element>
+  <element name="gmx:scope">
+    <label>Ambito</label>
+    <description>Definizione dell’ambito</description>
+  </element>
+  <element name="gmx:versionNumber">
+    <label>Versione</label>
+    <description>Versione del catalogo</description>
+  </element>
+  <element name="gmx:versionDate">
+    <label>Data</label>
+    <description>Data del catalogo</description>
+  </element>
+  <element name="gmx:fieldOfApplication">
+    <label>Campo di applicazione</label>
+    <description>Campo di applicazione</description>
+  </element>
+  <element name="gmd:MD_RestrictionCode" context="gmd:useConstraints">
+    <label>Restrizione d’uso</label>
+  </element>
+  <element name="xlink:type">
+    <label>Tipo di link</label>
+    <description>Tipo di link</description>
   </element>
 </labels>
 

@@ -597,12 +597,20 @@
 
    <!-- ================================================================= -->
 
+  <!-- hierarchyLevelName: "servizio" for the services (RNDT); for datasets and series the name is kept when it has a
+       value (ISO 19115 wants it when the level is not dataset: rule M61 of the ISO schematron), and a series without
+       it gets "Serie" (template gmd:hierarchyLevel below). -->
   <xsl:template match="gmd:hierarchyLevelName" priority="10">
-    <xsl:if test="exists(../gmd:identificationInfo/srv:SV_ServiceIdentification)">
-      <xsl:copy>
-        <gco:CharacterString>servizio</gco:CharacterString>
-      </xsl:copy>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="exists(../gmd:identificationInfo/srv:SV_ServiceIdentification)">
+        <xsl:copy>
+          <gco:CharacterString>servizio</gco:CharacterString>
+        </xsl:copy>
+      </xsl:when>
+      <xsl:when test="normalize-space(.) != ''">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="gmd:hierarchyLevel" priority="10">
@@ -623,6 +631,12 @@
             <xsl:value-of select="$value"/>
           </gmd:MD_ScopeCode>
         </gmd:hierarchyLevel>
+        <xsl:if test="$value = 'series' and not(following-sibling::gmd:hierarchyLevel)
+                      and not(../gmd:hierarchyLevelName[normalize-space(.) != ''])">
+          <gmd:hierarchyLevelName>
+            <gco:CharacterString>Serie</gco:CharacterString>
+          </gmd:hierarchyLevelName>
+        </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

@@ -18,6 +18,7 @@ import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.datamanager.draft.DraftMetadataManager;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.search.IndexingMode;
+import org.fao.geonet.kernel.search.submission.IDeletionSubmitter;
 import org.fao.geonet.kernel.search.submission.IIndexSubmitter;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
@@ -155,6 +156,23 @@ public class RNDTMetadataManager extends DraftMetadataManager {
             metadataIndexer.indexMetadata(stringId, indexSubmittor, indexingMode);
         }
         return savedMetadata;
+    }
+
+    /**
+     * Removes a record, and for a working copy also its document in the search index.
+     * <p>
+     * Since GeoNetwork 4.4.13 (asynchronous indexing) DraftMetadataManager removes a record from the index by UUID. A
+     * working copy has the UUID of its approved record but its own document, "&lt;uuid&gt;-draft": after "cancel the
+     * working copy" the draft stayed in the search results and in the editor board, although it was no longer in the
+     * database. GeoNetwork 4.4.12 removed the document by id, as done here.
+     */
+    @Override
+    public void deleteMetadata(ServiceContext context, String metadataId, IDeletionSubmitter submitter) throws Exception {
+        boolean isDraft = metadataUtils.findOne(metadataId) instanceof MetadataDraft;
+        super.deleteMetadata(context, metadataId, submitter);
+        if (isDraft) {
+            getSearchManager().deleteByQuery(String.format("+id:%s", metadataId), submitter);
+        }
     }
 
     public Element updateFixedInfo(Integer groupOwner, String schema,

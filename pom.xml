@@ -30,6 +30,11 @@
     </dependency>
     <dependency>
       <groupId>org.geonetwork-opensource</groupId>
+      <artifactId>gn-listeners</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.geonetwork-opensource</groupId>
       <artifactId>gn-domain</artifactId>
       <version>${project.version}</version>
     </dependency>

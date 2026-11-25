@@ -11,6 +11,9 @@
 
     <bean name="metadataManager" primary="true" class="org.fao.geonet.schema.iso19139_rndt.RNDTMetadataManager"/>
 
+    <!-- Working copies removed also from the search index (GeoNetwork 4.4.13 removes them by UUID) -->
+    <bean name="rndtDraftUtilities" primary="true" class="org.fao.geonet.schema.iso19139_rndt.RNDTDraftUtilities"/>
+
     <!-- Working copies of RNDT records (readwriteUuid): same states that create a working copy as in the core -->
     <bean name="rndtMetadataUtils" primary="true" class="org.fao.geonet.schema.iso19139_rndt.RNDTMetadataUtils">
       <property name="listOfStatusCreatingDraft">

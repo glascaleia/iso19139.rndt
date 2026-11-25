@@ -101,6 +101,12 @@
 			<label>Serie</label>
 			<description>Le informazioni si applicano ad una serie</description>
 		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>service</code>
+			<label>Servizio</label>
+			<description>Le informazioni si applicano ad un servizio</description>
+		</entry>
 
 	</codelist>
 	<!-- ==================================================== -->
@@ -579,7 +585,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>processor</code>
-			<label>Processor</label>
+			<label>Elaboratore</label>
 			<description>Soggetto che ha processato i dati modificando in qualche modo la risorsa</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -678,12 +684,12 @@
 			</entry>
 			<entry>
 					<code>mixed</code>
-					<label>misto</label>
+					<label>Misto</label>
 					<description>Il servizio è agganciato ad alcuni dati, ma può operare anche con altri dati</description>
 			</entry>
 			<entry>
 					<code>loose</code>
-					<label>svincolato</label>
+					<label>Svincolato</label>
 					<description>Il servizio è sganciato dai dati, ovvero non strettamente legato ad alcun tipo di dato</description>
 			</entry>
 	</codelist>

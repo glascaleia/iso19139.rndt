@@ -19,6 +19,43 @@
   <xsl:variable name="iso19139RNDTlabels" select="$iso19139RNDTschema/labels"/>
   <xsl:variable name="iso19139RNDTcodelists" select="$iso19139RNDTschema/codelists"/>
 
+  <!-- Codelists of the editor: those of the plugin where it defines them (Italian labels, RNDT values only, e.g.
+       dataset, series and service as hierarchy level), those of iso19139 for the others. -->
+  <xsl:variable name="iso19139RNDTeditorCodelists">
+    <codelists>
+      <xsl:copy-of select="$iso19139RNDTcodelists/codelist"/>
+      <xsl:copy-of select="$iso19139codelists/codelist[not(@name = $iso19139RNDTcodelists/codelist/@name)]"/>
+    </codelists>
+  </xsl:variable>
+
+  <!-- The fields with a codelist are built by the iso19139 layout, which reads the codelists of iso19139 unless it
+       gets others: for the RNDT records it gets the ones above. -->
+  <xsl:template mode="mode-iso19139" priority="2000" match="*[*/@codeList]|*[gn:element/gn:text]">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
+    <xsl:param name="refToDelete" required="no"/>
+    <xsl:choose>
+      <xsl:when test="$schema = 'iso19139.rndt'">
+        <xsl:next-match>
+          <xsl:with-param name="schema" select="$schema"/>
+          <xsl:with-param name="labels" select="$labels"/>
+          <xsl:with-param name="codelists" select="$iso19139RNDTeditorCodelists/codelists"/>
+          <xsl:with-param name="overrideLabel" select="$overrideLabel"/>
+          <xsl:with-param name="refToDelete" select="$refToDelete"/>
+        </xsl:next-match>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:next-match>
+          <xsl:with-param name="schema" select="$schema"/>
+          <xsl:with-param name="labels" select="$labels"/>
+          <xsl:with-param name="overrideLabel" select="$overrideLabel"/>
+          <xsl:with-param name="refToDelete" select="$refToDelete"/>
+        </xsl:next-match>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <!-- Visit all XML tree recursively -->
   <xsl:template mode="mode-iso19139.rndt" match="*|@*">
     <xsl:param name="schema" select="$schema" required="no"/>

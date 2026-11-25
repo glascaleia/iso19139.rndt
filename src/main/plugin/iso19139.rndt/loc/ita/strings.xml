@@ -51,10 +51,10 @@
 
   <!-- New strings added for the AngularJS editor -->
   <!-- View and tabs -->
-  <advanced>Full</advanced>
+  <advanced>Completa</advanced>
   <default>Metadati Comuni</default>
   <rndt-view>RNDT</rndt-view>
-  <simple>Simple</simple>
+  <simple>Semplice</simple>
   <inspire>Parole chiave &amp; Temi INSPIRE</inspire>
   <resource>Resource</resource>
   <xml>XML</xml>

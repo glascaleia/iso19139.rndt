@@ -10,7 +10,9 @@ GeoNetwork Italian RNDT metadata pluggable schema for version 4.4.x
   http://geodati.gov.it/geoportale/regole-tecniche-rndt
   
 
-This plugin requires GeoNetwork version 4.4.x (built and tested with 4.4.12).
+This plugin requires GeoNetwork 4.4.13 or a later 4.4.x (built and tested with 4.4.13). Since 4.4.13 the
+indexing API of GeoNetwork takes an `IIndexSubmitter` (asynchronous indexing, geonetwork/core-geonetwork#8465), so
+the Java classes no longer compile against 4.4.12 and earlier.
 
 ## Building
 
@@ -20,18 +22,18 @@ Java 11 (GeoNetwork 4.4 does not build with newer JDKs), e.g. on macOS
 `export JAVA_HOME=$(/usr/libexec/java_home -v 11)`.
 
 ```shell
-git clone --branch 4.4.12-rndt https://github.com/glascaleia/core-geonetwork.git
+git clone --branch 4.4.13-rndt https://github.com/glascaleia/core-geonetwork.git
 cd core-geonetwork
 ./add-schema.sh iso19139.rndt https://github.com/glascaleia/iso19139.rndt 4.4.x
 mvn install -DskipTests -pl schemas/iso19139.rndt -am
 ```
 
-Branch `4.4.12-rndt` is GeoNetwork 4.4.12 plus a fix to `add-schema.sh`, which
-in 4.4.12 does not register the module in `schemas/pom.xml` (Maven then fails
+Branch `4.4.13-rndt` is GeoNetwork 4.4.13 plus a fix to `add-schema.sh`, which
+in 4.4.13 does not register the module in `schemas/pom.xml` (Maven then fails
 with `Could not find the selected project in the reactor`). The fix is proposed
 upstream in
 [geonetwork/core-geonetwork#9613](https://github.com/geonetwork/core-geonetwork/pull/9613);
-once it is released, clone the GeoNetwork tag instead. With the plain `4.4.12`
+once it is released, clone the GeoNetwork tag instead. With the plain `4.4.13`
 tag, add the module by hand to the `<modules>` list of `schemas/pom.xml`:
 
 ```xml
@@ -67,7 +69,8 @@ Maven resolves the symlink, so the parent pom is not found through
 ```shell
 mvn install -N
 mvn install -N -f schemas/pom.xml
-mvn install -pl schemas/iso19139.rndt
+mvn install -DskipTests -pl schemas/iso19139.rndt -am   # also the GeoNetwork modules it needs (core, listeners...)
+mvn install -pl schemas/iso19139.rndt                   # tests
 ```
 
 ## Sample records
@@ -76,7 +79,7 @@ mvn install -pl schemas/iso19139.rndt
 *Admin console > Metadata and templates*. How they were converted from the 2011 profile:
 [tools/sample-data](tools/sample-data/README.md).
 
-## Installing in an existing GeoNetwork 4.4
+## Installing in an existing GeoNetwork 4.4.13 or later
 
 1. Copy `gn-schema-iso19139.rndt-<version>.jar` to `WEB-INF/lib`.
 2. Copy the `iso19139.rndt` folder to the schema plugins directory

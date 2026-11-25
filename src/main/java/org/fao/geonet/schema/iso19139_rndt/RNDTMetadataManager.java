@@ -18,6 +18,7 @@ import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.datamanager.draft.DraftMetadataManager;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.search.IndexingMode;
+import org.fao.geonet.kernel.search.submission.IIndexSubmitter;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.lib.Lib;
@@ -89,7 +90,7 @@ public class RNDTMetadataManager extends DraftMetadataManager {
     @Override
     public AbstractMetadata insertMetadata(ServiceContext context, AbstractMetadata newMetadata, Element metadataXml,
                                            IndexingMode indexingMode, boolean updateFixedInfo, UpdateDatestamp updateDatestamp,
-                                           boolean fullRightsForGroup, boolean forceRefreshReaders) throws Exception {
+                                           boolean fullRightsForGroup, IIndexSubmitter indexSubmittor) throws Exception {
         final String schema = newMetadata.getDataInfo().getSchemaId();
 
         // Check if the schema is allowed by settings
@@ -151,7 +152,7 @@ public class RNDTMetadataManager extends DraftMetadataManager {
         metadataOperations.copyDefaultPrivForGroup(context, stringId, groupId, fullRightsForGroup);
 
         if (indexingMode != IndexingMode.none) {
-            metadataIndexer.indexMetadata(stringId, forceRefreshReaders, indexingMode);
+            metadataIndexer.indexMetadata(stringId, indexSubmittor, indexingMode);
         }
         return savedMetadata;
     }

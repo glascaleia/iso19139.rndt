@@ -24,8 +24,8 @@
 
 <!--
   Used by the DCAT formatters of this plugin (dcat, eu-dcat-ap, eu-dcat-ap-hvd,
-  eu-geodcat-ap), with ../rndt-dcat-identifier.xsl. Two pieces of RNDT records
-  that the DCAT formatters of the core lose:
+  eu-geodcat-ap), with ../rndt-dcat-identifier.xsl. What the DCAT formatters of
+  the core lose of RNDT records (3: format names, below):
 
   1. Format of the distributions. In ISO 19139 the format is in
      MD_Distribution/distributionFormat; the iso19139 to ISO 19115-3 conversion
@@ -49,6 +49,11 @@
                 xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
                 xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
                 xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+                xmlns:dct="http://purl.org/dc/terms/"
+                xmlns:dcat="http://www.w3.org/ns/dcat#"
                 version="2.0"
                 exclude-result-prefixes="#all">
 
@@ -58,6 +63,52 @@
       <xsl:apply-templates select="ancestor::gmd:MD_Distribution[1]/gmd:distributionFormat"
                            mode="from19139to19115-3.2018"/>
     </mrd:MD_DigitalTransferOptions>
+  </xsl:template>
+
+  <!--
+    3. Format names of RNDT records missing from the table of the core
+       ($formatLabelToUri, dcat-variables.xsl): "geo+json" and "x-shapefile"
+       (names of the IANA and INSPIRE media types, without "application/") end
+       up as a dct:format with a label only, no URI of the EU file types. They
+       are looked up with the name the table knows; the label stays the original.
+       Same template as the core (dcat-core-distribution.xsl) otherwise.
+  -->
+  <xsl:variable name="rndtFormatLabels" as="node()*">
+    <entry key="application/geo+json">geo+json</entry>
+    <entry key="shp">x-shapefile</entry>
+    <entry key="shp">application/x-shapefile</entry>
+  </xsl:variable>
+
+  <xsl:template name="rdf-format-as-mediatype">
+    <xsl:param name="elementName" as="xs:string" select="'dct:format'"/>
+    <xsl:param name="format" as="xs:string"/>
+
+    <xsl:variable name="lookup"
+                  as="xs:string"
+                  select="(($rndtFormatLabels[lower-case(text()) = lower-case($format)]/@key)[1], $format)[1]"/>
+    <xsl:variable name="formatUri"
+                  as="xs:string?"
+                  select="($formatLabelToUri[lower-case($lookup) = lower-case(text())]/@key)[1]"/>
+
+    <xsl:variable name="rangeName"
+                  as="xs:string"
+                  select="if ($elementName = 'dct:format') then 'dct:MediaTypeOrExtent' else 'dct:MediaType'"/>
+    <xsl:element name="{$elementName}">
+      <xsl:choose>
+        <xsl:when test="$formatUri">
+          <xsl:element name="{$rangeName}">
+            <xsl:attribute name="rdf:about" select="$formatUri"/>
+          </xsl:element>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:element name="{$rangeName}">
+            <rdfs:label>
+              <xsl:value-of select="$format"/>
+            </rdfs:label>
+          </xsl:element>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template mode="iso19115-3-to-dcat-resource" match="mdb:MD_Metadata" priority="10">

@@ -25,7 +25,8 @@
 <!--
   RNDT records are ISO 19139: same "dcat" formatter as the iso19139 schema of
   the GeoNetwork core (same version as this plugin), keeping the whole
-  "codiceIPA:uuid" identifier (see ../rndt-dcat-identifier.xsl).
+  "codiceIPA:uuid" identifier (see ../rndt-dcat-identifier.xsl), with the format of the
+  distributions and the owner (../rndt-dcat-agents-format.xsl).
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
@@ -33,5 +34,6 @@
   <xsl:import href="../../../iso19139/formatter/dcat/view.xsl"/>
 
   <xsl:include href="../rndt-dcat-identifier.xsl"/>
+  <xsl:include href="../rndt-dcat-agents-format.xsl"/>
 
 </xsl:stylesheet>
